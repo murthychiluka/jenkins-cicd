@@ -1,0 +1,50 @@
+
+pipeline {
+    agent any
+
+    parameters {
+        choice(
+            name: 'STAGE_TO_RUN',
+            choices: ['Build', 'Test', 'Deploy', 'Smoke Test'],
+            description: 'Select the stage to execute'
+        )
+    }
+
+    stages {
+        stage('Build') {
+            when {
+                expression { params.STAGE_TO_RUN == 'Build' }
+            }
+            steps {
+                echo 'Building application...'
+            }
+        }
+
+        stage('Test') {
+            when {
+                expression { params.STAGE_TO_RUN == 'Test' }
+            }
+            steps {
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression { params.STAGE_TO_RUN == 'Deploy' }
+            }
+            steps {
+                echo 'Deploying application...'
+            }
+        }
+
+        stage('Smoke Test') {
+            when {
+                expression { params.STAGE_TO_RUN == 'Smoke Test' }
+            }
+            steps {
+                echo 'Running smoke tests...'
+            }
+        }
+    }
+}
